@@ -1,0 +1,21 @@
+{
+  "classification": "RETAINED-AUDIT",
+  "claim_boundary": "Publication-safe runtime summary only; the installed runtime and private production inputs are not distributed.",
+  "fresh_process_count": 6,
+  "measurement_runtime": "NVIDIA Isaac Sim 6.0.0 full Kit",
+  "opening_contract": {
+    "instance_proxy_expansion": false,
+    "load_policy": "LoadAll",
+    "population_mask": null,
+    "post_open_mutations": [],
+    "session_layer_empty": true,
+    "traversal": "Usd.Stage.Traverse with UsdPrimDefaultPredicate",
+    "variant_overrides": []
+  },
+  "openusd_version": "0.25.11",
+  "run_id": "stage-xray-isaac600-rerun-20260810-a",
+  "runtime_binary_sha256": "EBCD2B1419DE83B6DD62DDCA573BB39DE6B103E3CC514C30182818BC33D84F23",
+  "runtime_version": "6.0.0-rc.59+release.41464.5f2772bc.gl",
+  "schema_version": "stage-xray-environment-public-summary-3.0",
+  "source_environment_report_sha256": "FE914189C9F9B44269114EFDBECF65EF01F2AF908201680408ADAAD1DBADB8B0"
+}

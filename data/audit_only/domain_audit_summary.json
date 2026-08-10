@@ -1,0 +1,40 @@
+{
+  "claim_boundary": "Retained aggregate audit only; production Stage inputs are withheld and the containment measurement is not publicly reexecuted.",
+  "classification": "RETAINED-AUDIT",
+  "opening_contract": {
+    "instance_proxy_expansion": false,
+    "load_policy": "LoadAll",
+    "openusd_version": "0.25.11",
+    "population_mask": null,
+    "post_open_mutations": [],
+    "runtime": "NVIDIA Isaac Sim 6.0.0 full Kit",
+    "runtime_binary_sha256": "EBCD2B1419DE83B6DD62DDCA573BB39DE6B103E3CC514C30182818BC33D84F23",
+    "runtime_version": "6.0.0-rc.59+release.41464.5f2772bc.gl",
+    "session_layer_empty": true,
+    "traversal": "Usd.Stage.Traverse with UsdPrimDefaultPredicate",
+    "variant_overrides": []
+  },
+  "run_id": "stage-xray-isaac600-rerun-20260810-a",
+  "scalex_pod_full_root": {
+    "added": 9377,
+    "common": 8906,
+    "earlier": 16559,
+    "later": 18283,
+    "removed": 7653,
+    "union": 25936,
+    "unique_path_membership_difference": 17030
+  },
+  "schema_version": "stage-xray-domain-audit-public-summary-3.0",
+  "source_domain_audit_sha256": "25DB0BC98975C5C3A083381BB0160CC62C49C4F6B99AB6550ECC78BCD45E2B23",
+  "status": "RESOLVED_FULL_ROOT",
+  "whole_dream_ai": {
+    "added": 9377,
+    "common": 50444,
+    "earlier": 58097,
+    "later": 59821,
+    "removed": 7653,
+    "union": 67474,
+    "unique_path_membership_difference": 17030
+  },
+  "whole_dream_ai_changed_paths_outside_scalex_full_root": 0
+}

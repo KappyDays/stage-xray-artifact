@@ -1,0 +1,41 @@
+{
+  "all_repeatability_passed": true,
+  "attempts_per_state": 3,
+  "claim_boundary": "Retained publication-safe summary only; raw process outputs and production inputs are withheld, so extraction is not publicly reexecuted.",
+  "classification": "RETAINED-AUDIT",
+  "fresh_process_count": 6,
+  "measurement_runtime": "NVIDIA Isaac Sim 6.0.0 full Kit",
+  "openusd_version": "0.25.11",
+  "run_id": "stage-xray-isaac600-rerun-20260810-a",
+  "runtime_binary_sha256": "EBCD2B1419DE83B6DD62DDCA573BB39DE6B103E3CC514C30182818BC33D84F23",
+  "runtime_version": "6.0.0-rc.59+release.41464.5f2772bc.gl",
+  "schema_version": "stage-xray-repeatability-public-summary-3.0",
+  "source_repeatability_report_sha256": "207BCBE381783186EAC3B10B937CA77704B8A82846017B28641BA90A479AEF01",
+  "states": {
+    "earlier": {
+      "attempt_summary_sha256": [
+        "402AD8D859E695F04C3EB913F8EFFB25EF56FE1E6869B807582F9E25F38B0F49",
+        "BEC6055465EDBD0D9729F04D934BBB3C9A8A74ACF9CD15AABE9EF96947B40735",
+        "B6C030A904B3EA622CCF0C023331417DB0E46586DB5F63F73A70BF3A13C0B008"
+      ],
+      "logical_projection_commitment": "DF48621776A97245C56972E138848122935F9AFA20C78E3C2B8DD281FCD7A217",
+      "public_projection_file_sha256": "9638448242D8B885291CF88C6AAAF87A029E3F85861CA929C7E0785A6A4BBD8D",
+      "selected_prim_count": 16559,
+      "whole_dream_ai_selected_prim_count": 58097,
+      "xray_commitment": "DE583A52B4BB1A029BF9B60500735A341F17F11CABBAE762A564A7D2FF88785B"
+    },
+    "later": {
+      "attempt_summary_sha256": [
+        "3F3177C1F3782711E180D783D028CB1B5BB9E0933F27C5F51CA9539520974818",
+        "9E263D4D02F2FBDC01012FB8D0A32F7E97526FD7717BA07CE2627B971D9F4E39",
+        "1DE6F6BCA2FAFC0A18C914CB21E58BDBF87ADCADF2C3CD8FE242E84AEE4963A5"
+      ],
+      "logical_projection_commitment": "B3CE0835DEFE5DA657795CDFB398FEA24218D09AE64C2F6FB585B6218C9534A9",
+      "public_projection_file_sha256": "53B61291A488BB4D68D062A1DC11DD8C3C73653BC8EB21D908E95A08C1E8D2DF",
+      "selected_prim_count": 18283,
+      "whole_dream_ai_selected_prim_count": 59821,
+      "xray_commitment": "731309CB746894D4DE216FFA1467DD0AE9A4A01B19FC15DAFFB98B83B36B4D20"
+    }
+  },
+  "unique_fresh_process_pid_count": 6
+}
