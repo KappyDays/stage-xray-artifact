@@ -2,7 +2,7 @@
 
 ## Fully public replay
 
-The artifact fully recomputes the exact difference, landmark regions,
+The artifact fully recomputes the original record comparison, landmark regions,
 exactly-once assignment, affected-region expansion, second comparison, region
 distribution, and storage-reconstruction check from sanitized records.
 
@@ -16,7 +16,8 @@ and resolver configuration are withheld.
 
 ## Empirical gaps
 
-- Earlier is a posthoc reconstruction, not independent temporal truth.
+- Earlier and Later denote the two saved Stage inputs used in the comparison;
+  the names do not establish temporal or physical ground truth.
 - The evaluated pair contains Payload landmarks but no Reference landmarks.
 - The pair contains additions and removals but no common-path type,
   Reference-presence, or Payload-presence changes.

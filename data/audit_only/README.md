@@ -6,7 +6,8 @@ They support integrity and provenance review but are not presented as publicly
 reexecuted results.
 
 - `environment_summary.json` binds the runtime and opening contract.
-- `domain_audit_summary.json` records the whole-Dream-AI containment result.
+- `domain_audit_summary.json` records a whole-Dream-AI supporting audit. Its
+  aggregate counts are not results directly reported in the manuscript.
 - `repeatability_summary.json` records the six-process repeatability result.
 - `fresh_runs/*.summary.json` are the six state/attempt summaries.
 

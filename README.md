@@ -1,10 +1,14 @@
-# Stage X-ray Artifact v3.0.0
+# Stage X-ray Artifact v4.0.0
 
 This repository is the publication-safe artifact for **Stage X-ray: Validated
 Structural Comparison of OpenUSD Stages for HPC Digital Twins**. The measured
 evidence was produced with NVIDIA Isaac Sim 6.0.0 and its bundled OpenUSD
 0.25.11 runtime. The public replay recomputes the paper's central ScaleX-POD
 results from two sanitized four-field projections.
+
+Earlier and Later denote the two saved Stage inputs used in the comparison.
+The names identify the two comparison sides and do not establish temporal or
+physical ground truth.
 
 ## Quick start
 
@@ -26,7 +30,7 @@ Successful verification reproduces:
 
 - 16,559 Earlier and 18,283 Later selected Prims;
 - 8,906 common, 7,653 removed, and 9,377 added paths;
-- 115 aligned regions: 44 added, 30 removed, one changed, and 40 unchanged;
+- 115 regions: 44 added, 30 removed, one changed, and 40 unchanged;
 - exactly-once ownership of all 34,842 state-specific records;
 - 17,041 expanded paths and exact recovery of all 17,030 differences;
 - the affected-region distribution and a dependency-free SVG rendering; and
@@ -36,10 +40,10 @@ Successful verification reproduces:
 
 | Evidence | Level | Meaning |
 |---|---|---|
-| Exact diff, regions, assignment, expansion, and second comparison | `RECOMPUTED` | Recalculated from publication-safe records |
+| Original record comparison, regions, assignment, expansion, and second comparison | `RECOMPUTED` | Recalculated from publication-safe records |
 | Region distribution and storage reconstruction | `RECOMPUTED` | Fully rerun by the public command |
 | Six-process Isaac Sim 6.0.0 extraction repeatability | `RETAINED-AUDIT` | Publication-safe summaries can be audited; private inputs are withheld |
-| Whole-Dream-AI containment | `RETAINED-AUDIT` | Aggregate audit is retained; production inputs are withheld |
+| Whole-Dream-AI supporting audit | `RETAINED-AUDIT` | Additional aggregate audit is retained; it is not a result directly reported in the manuscript and production inputs are withheld |
 | Initial production Stage opening and extraction | `NOT-PUBLICLY-REEXECUTABLE` | Requires private Stage assets and resolver configuration |
 
 The artifact does not claim physical change, causality, performance
@@ -59,5 +63,5 @@ reconstruction.
 ## License and citation
 
 Code and publication-safe data are released under Apache License 2.0. Use the
-immutable GitHub release `v3.0.0` and the metadata in `CITATION.cff` when citing
+immutable GitHub release `v4.0.0` and the metadata in `CITATION.cff` when citing
 this artifact.

@@ -8,7 +8,7 @@ from collections.abc import Iterable, Mapping
 from .schema import Record
 
 
-CHANGE_LABELS = (
+DIFFERENCE_TYPES = (
     "ADDED",
     "REMOVED",
     "TYPE_CHANGED",
@@ -32,26 +32,26 @@ def compare_records(
 
     result: dict[str, tuple[str, ...]] = {}
     for path in sorted(paths, key=lambda value: value.encode("utf-8")):
-        masks: list[str] = []
+        difference_types: list[str] = []
         if path not in earlier:
-            masks.append("ADDED")
+            difference_types.append("ADDED")
         elif path not in later:
-            masks.append("REMOVED")
+            difference_types.append("REMOVED")
         else:
             if earlier[path].prim_type_name != later[path].prim_type_name:
-                masks.append("TYPE_CHANGED")
+                difference_types.append("TYPE_CHANGED")
             if (
                 earlier[path].has_authored_references
                 != later[path].has_authored_references
             ):
-                masks.append("REFERENCE_PRESENCE_CHANGED")
+                difference_types.append("REFERENCE_PRESENCE_CHANGED")
             if (
                 earlier[path].has_authored_payloads
                 != later[path].has_authored_payloads
             ):
-                masks.append("PAYLOAD_PRESENCE_CHANGED")
-        if masks:
-            result[path] = tuple(masks)
+                difference_types.append("PAYLOAD_PRESENCE_CHANGED")
+        if difference_types:
+            result[path] = tuple(difference_types)
     return result
 
 
@@ -71,6 +71,13 @@ def membership_counts(
     }
 
 
-def mask_counts(diff: Mapping[str, tuple[str, ...]]) -> dict[str, int]:
-    counts = Counter(mask for masks in diff.values() for mask in masks)
-    return {label: counts[label] for label in CHANGE_LABELS}
+def difference_type_counts(diff: Mapping[str, tuple[str, ...]]) -> dict[str, int]:
+    counts = Counter(
+        difference_type
+        for difference_types in diff.values()
+        for difference_type in difference_types
+    )
+    return {
+        difference_type: counts[difference_type]
+        for difference_type in DIFFERENCE_TYPES
+    }

@@ -16,6 +16,6 @@
   "run_id": "stage-xray-isaac600-rerun-20260810-a",
   "runtime_binary_sha256": "EBCD2B1419DE83B6DD62DDCA573BB39DE6B103E3CC514C30182818BC33D84F23",
   "runtime_version": "6.0.0-rc.59+release.41464.5f2772bc.gl",
-  "schema_version": "stage-xray-environment-public-summary-3.0",
+  "schema_version": "stage-xray-environment-public-summary-4.0",
   "source_environment_report_sha256": "FE914189C9F9B44269114EFDBECF65EF01F2AF908201680408ADAAD1DBADB8B0"
 }

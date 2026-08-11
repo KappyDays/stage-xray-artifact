@@ -13,13 +13,13 @@ from .schema import ROOT_PATH, Record, parent_path
 
 RESIDUAL_IDENTITY = "__ROOT_LOCAL_RESIDUAL__"
 REGION_SIGNATURE_DOMAIN = "stage-xray:step1:public-region-signature:1"
-REGION_CORE_MASKS = (
+REGION_CHANGE_REASONS = (
     "REGION_ADDED",
     "REGION_REMOVED",
-    "ANCHOR_TYPE_CHANGED",
+    "LANDMARK_TYPE_CHANGED",
     "REFERENCE_PRESENCE_CHANGED",
     "PAYLOAD_PRESENCE_CHANGED",
-    "COLLAPSED_SIGNATURE_CHANGED",
+    "REGION_RECORDS_CHANGED",
 )
 
 
@@ -44,7 +44,7 @@ def _inside(path: str, root: str) -> bool:
 def _region_id(identity: str, root: str) -> str:
     if identity == RESIDUAL_IDENTITY:
         return f"RESIDUAL@{root}"
-    return f"ANCHOR@{identity}"
+    return f"LANDMARK@{identity}"
 
 
 def _relative(path: str, identity: str, root: str) -> str:
@@ -72,7 +72,7 @@ class Region:
 class StateRegions:
     records: Mapping[str, Record]
     root: str
-    anchors: tuple[str, ...]
+    landmarks: tuple[str, ...]
     owner: dict[str, str]
     regions: dict[str, Region]
 
@@ -82,7 +82,7 @@ def build_regions(
 ) -> StateRegions:
     if root not in records:
         raise ValueError(f"scope root is absent: {root}")
-    anchors = tuple(
+    landmarks = tuple(
         sorted(
             (
                 path
@@ -92,24 +92,24 @@ def build_regions(
             key=lambda value: value.encode("utf-8"),
         )
     )
-    anchor_set = set(anchors)
-    parent_anchor: dict[str, str | None] = {}
-    for anchor in anchors:
-        current = parent_path(anchor)
+    landmark_set = set(landmarks)
+    parent_landmark: dict[str, str | None] = {}
+    for landmark in landmarks:
+        current = parent_path(landmark)
         selected: str | None = None
         while current is not None and _inside(current, root):
-            if current in anchor_set:
+            if current in landmark_set:
                 selected = current
                 break
             current = parent_path(current)
-        parent_anchor[anchor] = selected
+        parent_landmark[landmark] = selected
 
     owner: dict[str, str] = {}
     for path in sorted(records, key=lambda value: value.encode("utf-8")):
         current: str | None = path
         selected_owner = RESIDUAL_IDENTITY
         while current is not None and _inside(current, root):
-            if current in anchor_set:
+            if current in landmark_set:
                 selected_owner = current
                 break
             current = parent_path(current)
@@ -136,13 +136,13 @@ def build_regions(
             for path in region_paths
         ]
         facts.sort(key=lambda row: row["relative_prim_path"].encode("utf-8"))
-        parent = None if identity == RESIDUAL_IDENTITY else parent_anchor[identity]
+        parent = None if identity == RESIDUAL_IDENTITY else parent_landmark[identity]
         region_type = (
             "ROOT_LOCAL_RESIDUAL_REGION"
             if identity == RESIDUAL_IDENTITY
-            else "NESTED_ANCHOR_REGION"
+            else "NESTED_LANDMARK_REGION"
             if parent is not None
-            else "ANCHOR_OWNED_REGION"
+            else "LANDMARK_REGION"
         )
         regions[identity] = Region(
             identity=identity,
@@ -161,7 +161,7 @@ def build_regions(
     return StateRegions(
         records=records,
         root=root,
-        anchors=anchors,
+        landmarks=landmarks,
         owner=owner,
         regions=regions,
     )
@@ -180,32 +180,35 @@ def compare_regions(
     for identity in identities:
         e_region = earlier.regions.get(identity)
         l_region = later.regions.get(identity)
-        masks: list[str] = []
+        reasons: list[str] = []
         if e_region is None:
-            masks.append("REGION_ADDED")
+            reasons.append("REGION_ADDED")
         elif l_region is None:
-            masks.append("REGION_REMOVED")
+            reasons.append("REGION_REMOVED")
         else:
             if identity != RESIDUAL_IDENTITY:
-                e_anchor = earlier.records[identity]
-                l_anchor = later.records[identity]
-                if e_anchor.prim_type_name != l_anchor.prim_type_name:
-                    masks.append("ANCHOR_TYPE_CHANGED")
+                e_landmark = earlier.records[identity]
+                l_landmark = later.records[identity]
+                if e_landmark.prim_type_name != l_landmark.prim_type_name:
+                    reasons.append("LANDMARK_TYPE_CHANGED")
                 if (
-                    e_anchor.has_authored_references
-                    != l_anchor.has_authored_references
+                    e_landmark.has_authored_references
+                    != l_landmark.has_authored_references
                 ):
-                    masks.append("REFERENCE_PRESENCE_CHANGED")
-                if e_anchor.has_authored_payloads != l_anchor.has_authored_payloads:
-                    masks.append("PAYLOAD_PRESENCE_CHANGED")
+                    reasons.append("REFERENCE_PRESENCE_CHANGED")
+                if (
+                    e_landmark.has_authored_payloads
+                    != l_landmark.has_authored_payloads
+                ):
+                    reasons.append("PAYLOAD_PRESENCE_CHANGED")
             if e_region.canonical_facts != l_region.canonical_facts:
-                masks.append("COLLAPSED_SIGNATURE_CHANGED")
-        masks = [mask for mask in REGION_CORE_MASKS if mask in masks]
+                reasons.append("REGION_RECORDS_CHANGED")
+        reasons = [reason for reason in REGION_CHANGE_REASONS if reason in reasons]
         if e_region is None:
             status = "ADDED_REGION"
         elif l_region is None:
             status = "REMOVED_REGION"
-        elif masks:
+        elif reasons:
             status = "CHANGED_REGION"
         else:
             status = "UNCHANGED_REGION"
@@ -222,7 +225,7 @@ def compare_regions(
                 "later_region_prim_count": 0 if l_region is None else len(l_region.member_paths),
                 "earlier_signature_sha256": None if e_region is None else e_region.signature_sha256,
                 "later_signature_sha256": None if l_region is None else l_region.signature_sha256,
-                "core_change_masks": masks,
+                "region_change_reasons": reasons,
             }
         )
     return rows

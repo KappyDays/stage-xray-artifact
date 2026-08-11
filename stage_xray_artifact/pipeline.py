@@ -9,7 +9,7 @@ from pathlib import Path
 import statistics
 from typing import Any
 
-from .compare import compare_records, mask_counts, membership_counts
+from .compare import compare_records, difference_type_counts, membership_counts
 from .distribution import analyze_distribution, write_distribution_csv
 from .figure import write_distribution_svg
 from .manifest import verify_manifest
@@ -114,9 +114,9 @@ def reproduce(
     earlier = record_map(earlier_records)
     later = record_map(later_records)
 
-    baseline = compare_records(earlier, later)
+    original_comparison = compare_records(earlier, later)
     membership = membership_counts(earlier, later)
-    masks = mask_counts(baseline)
+    type_counts = difference_type_counts(original_comparison)
 
     earlier_regions = build_regions(earlier)
     later_regions = build_regions(later)
@@ -126,18 +126,18 @@ def reproduce(
     expanded = expand_affected_paths(earlier_regions, later_regions, affected)
     recomputed = compare_records(earlier, later, candidates=expanded)
 
-    missed = set(baseline) - set(recomputed)
-    false_positive = set(recomputed) - set(baseline)
-    exact_labels = baseline == recomputed
-    unchanged_context = expanded - set(baseline)
+    missed = set(original_comparison) - set(recomputed)
+    false_positive = set(recomputed) - set(original_comparison)
+    exact_difference_types = original_comparison == recomputed
+    unchanged_context = expanded - set(original_comparison)
 
     distribution, distribution_rows = analyze_distribution(
-        baseline, earlier_regions, later_regions, affected
+        original_comparison, earlier_regions, later_regions, affected
     )
     storage = reconstruction_report(earlier_records, later_records)
 
-    flat_diff_commitment = _commitment(
-        [[path, list(masks)] for path, masks in baseline.items()]
+    original_comparison_commitment = _commitment(
+        [[path, list(types)] for path, types in original_comparison.items()]
     )
     ownership_commitment = _commitment(
         [
@@ -164,7 +164,7 @@ def reproduce(
                     "later_region_prim_count",
                     "earlier_signature_sha256",
                     "later_signature_sha256",
-                    "core_change_masks",
+                    "region_change_reasons",
                 )
             }
             for row in region_rows
@@ -186,7 +186,7 @@ def reproduce(
     ]
 
     summary: dict[str, Any] = {
-        "schema_version": "stage-xray-artifact-reproduction-3.0",
+        "schema_version": "stage-xray-artifact-reproduction-4.0",
         "paper_binding": expected["paper_binding"],
         "input": {
             "path_encoding": PATH_ENCODING,
@@ -206,9 +206,9 @@ def reproduce(
             "removed_path_count": membership["removed"],
             "added_path_count": membership["added"],
             "path_union_count": membership["union"],
-            "observed_difference_count": len(baseline),
+            "observed_difference_count": len(original_comparison),
             "net_selected_prim_change": len(later_records) - len(earlier_records),
-            "mask_counts": masks,
+            "difference_type_counts": type_counts,
         },
         "rq2": {
             "reference_landmarks": {
@@ -227,7 +227,7 @@ def reproduce(
                 "earlier": statistics.median(earlier_region_sizes),
                 "later": statistics.median(later_region_sizes),
             },
-            "aligned_region_count": len(region_rows),
+            "region_count": len(region_rows),
             "region_status_counts": {
                 "ADDED_REGION": statuses["ADDED_REGION"],
                 "REMOVED_REGION": statuses["REMOVED_REGION"],
@@ -262,7 +262,7 @@ def reproduce(
             "expanded_path_count": len(expanded),
             "unchanged_expansion_context_count": len(unchanged_context),
             "recomputed_difference_count": len(recomputed),
-            "exact_path_and_label_match": exact_labels,
+            "exact_path_and_difference_type_match": exact_difference_types,
             "missed_path_count": len(missed),
             "false_positive_path_count": len(false_positive),
             "duplicate_emission_count": 0,
@@ -270,19 +270,27 @@ def reproduce(
         "validation": {
             "public_replay": {
                 "classification": "RECOMPUTED",
-                "status": "PASS" if exact_labels and not missed and not false_positive else "FAIL",
+                "status": (
+                    "PASS"
+                    if exact_difference_types and not missed and not false_positive
+                    else "FAIL"
+                ),
             },
             "storage_reconstruction": storage,
             "retained_audit": _audit_summary(root),
         },
         "commitments": {
-            "flat_difference_path_and_label_sha256": flat_diff_commitment,
+            "original_comparison_path_and_difference_type_sha256": (
+                original_comparison_commitment
+            ),
             "state_path_region_ownership_sha256": ownership_commitment,
-            "aligned_region_comparison_sha256": region_commitment,
+            "region_comparison_sha256": region_commitment,
             "expanded_path_set_sha256": expansion_commitment,
         },
         "claim_boundary": [
-            "Earlier is a posthoc reconstruction, not temporal or physical ground truth.",
+            "Earlier and Later denote the two saved Stage inputs used in the comparison. "
+            "These names identify the two comparison sides and do not establish temporal "
+            "or physical ground truth.",
             "The measured pair exercises Payload landmarks and added/removed paths only.",
             "Region distribution measures structural grouping, not importance, runtime, or human effort.",
             "Production USD inputs, raw Prim paths, resolver values, and reverse token maps are withheld.",
@@ -296,7 +304,7 @@ def reproduce(
         "verified_file_count": 0,
     }
     verification = {
-        "schema_version": "stage-xray-artifact-verification-3.0",
+        "schema_version": "stage-xray-artifact-verification-4.0",
         "expected_results": {
             "status": "PASS" if not differences else "FAIL",
             "difference_count": len(differences),
@@ -334,7 +342,7 @@ def _render_report(summary: dict[str, Any], verification: dict[str, Any]) -> str
 
 Overall verification: **{verification['status']}**
 
-## RQ1 — Exact selected-record difference
+## RQ1 — Original four-field record comparison
 
 - Earlier / Later selected Prims: {summary['input']['earlier']['selected_prim_count']:,} / {summary['input']['later']['selected_prim_count']:,}
 - Common / removed / added paths: {rq1['common_path_count']:,} / {rq1['removed_path_count']:,} / {rq1['added_path_count']:,}
@@ -342,7 +350,7 @@ Overall verification: **{verification['status']}**
 
 ## RQ2 — Hierarchy-region organization
 
-- Aligned / affected regions: {rq2['aligned_region_count']} / {rq2['affected_region_count']}
+- Total / affected regions: {rq2['region_count']} / {rq2['affected_region_count']}
 - Region statuses (added / removed / changed / unchanged): {rq2['region_status_counts']['ADDED_REGION']} / {rq2['region_status_counts']['REMOVED_REGION']} / {rq2['region_status_counts']['CHANGED_REGION']} / {rq2['region_status_counts']['UNCHANGED_REGION']}
 - Exactly-once state-specific ownership rows: {rq2['ownership_row_count']:,}
 
@@ -351,9 +359,9 @@ Overall verification: **{verification['status']}**
 - Expanded paths: {rq3['expanded_path_count']:,}
 - Recomputed differences: {rq3['recomputed_difference_count']:,}
 - Miss / false positive / duplicate: {rq3['missed_path_count']} / {rq3['false_positive_path_count']} / {rq3['duplicate_emission_count']}
-- Exact path-and-label equality: {rq3['exact_path_and_label_match']}
+- Exact path-and-difference-type equality: {rq3['exact_path_and_difference_type_match']}
 
 ## Access boundary
 
-The public replay recomputes the central comparison from publication-safe records. The six-process extraction repeatability and enclosing Dream-AI containment result are retained audits because the production OpenUSD inputs are withheld.
+The public replay recomputes the original record comparison and hierarchy-region results from publication-safe records. The six-process extraction repeatability and enclosing Dream-AI supporting audit are retained because the production OpenUSD inputs are withheld.
 """

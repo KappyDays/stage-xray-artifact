@@ -23,10 +23,10 @@ def analyze_distribution(
     seen: set[str] = set()
     affected_region_ids = {public_region_id(identity, earlier.root) for identity in affected}
 
-    for path, masks in diff.items():
-        if "ADDED" in masks:
+    for path, difference_types in diff.items():
+        if "ADDED" in difference_types:
             state, field, identity = later, "added", later.owner[path]
-        elif "REMOVED" in masks:
+        elif "REMOVED" in difference_types:
             state, field, identity = earlier, "removed", earlier.owner[path]
         else:
             continue
@@ -78,7 +78,7 @@ def analyze_distribution(
         )
 
     summary: dict[str, Any] = {
-        "schema_version": "stage-xray-region-distribution-3.0",
+        "schema_version": "stage-xray-region-distribution-4.0",
         "integrity": {
             "affected_region_count": len(rows),
             "unique_changed_path_count": len(seen),

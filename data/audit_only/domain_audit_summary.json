@@ -24,7 +24,7 @@
     "union": 25936,
     "unique_path_membership_difference": 17030
   },
-  "schema_version": "stage-xray-domain-audit-public-summary-3.0",
+  "schema_version": "stage-xray-domain-audit-public-summary-4.0",
   "source_domain_audit_sha256": "25DB0BC98975C5C3A083381BB0160CC62C49C4F6B99AB6550ECC78BCD45E2B23",
   "status": "RESOLVED_FULL_ROOT",
   "whole_dream_ai": {

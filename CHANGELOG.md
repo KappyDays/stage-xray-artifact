@@ -1,5 +1,18 @@
 # Changelog
 
+## v4.0.0 — 2026-08-11
+
+- Aligned public terminology and schema names with the final manuscript:
+  original record comparison, landmark, region, and difference type.
+- Replaced public `ANCHOR` identifiers with `LANDMARK` identifiers and removed
+  `aligned region` and `exact baseline` terminology.
+- Clarified Earlier/Later as comparison-side names without asserting temporal
+  or physical ground truth.
+- Marked whole-Dream-AI counts as retained supporting audit values that are not
+  directly reported in the manuscript.
+- Preserved the measured inputs, numerical results, evidence levels, privacy
+  boundary, and deterministic replay gates from v3.0.0.
+
 ## v3.0.0 — 2026-08-11
 
 - Published the submission artifact for the paper.

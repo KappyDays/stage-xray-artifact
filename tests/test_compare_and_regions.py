@@ -40,17 +40,24 @@ class CompareAndRegionTests(unittest.TestCase):
         self.assertEqual(len(built.regions), 3)
         self.assertEqual(built.owner[ROOT_PATH], RESIDUAL_IDENTITY)
         nested = built.regions[f"{ROOT_PATH}/N0001/N0002"]
-        self.assertEqual(nested.region_type, "NESTED_ANCHOR_REGION")
+        self.assertEqual(nested.region_type, "NESTED_LANDMARK_REGION")
         self.assertEqual(nested.parent_identity, f"{ROOT_PATH}/N0001")
         self.assertEqual(len(nested.member_paths), 2)
 
     def test_region_change_is_based_on_canonical_member_facts(self) -> None:
-        anchor = f"{ROOT_PATH}/N0001"
-        member = f"{anchor}/N0001"
-        earlier = build_regions(record_map([row(ROOT_PATH), row(anchor, payload=True), row(member, "Mesh")]))
-        later = build_regions(record_map([row(ROOT_PATH), row(anchor, payload=True), row(member, "Scope")]))
-        statuses = {item["region_id"]: item["status"] for item in compare_regions(earlier, later)}
-        self.assertEqual(statuses[f"ANCHOR@{anchor}"], "CHANGED_REGION")
+        landmark = f"{ROOT_PATH}/N0001"
+        member = f"{landmark}/N0001"
+        earlier = build_regions(
+            record_map([row(ROOT_PATH), row(landmark, payload=True), row(member, "Mesh")])
+        )
+        later = build_regions(
+            record_map([row(ROOT_PATH), row(landmark, payload=True), row(member, "Scope")])
+        )
+        statuses = {
+            item["region_id"]: item["status"]
+            for item in compare_regions(earlier, later)
+        }
+        self.assertEqual(statuses[f"LANDMARK@{landmark}"], "CHANGED_REGION")
 
 
 if __name__ == "__main__":

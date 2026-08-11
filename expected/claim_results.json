@@ -1,15 +1,15 @@
 {
   "claim_boundary": [
-    "Earlier is a posthoc reconstruction, not temporal or physical ground truth.",
+    "Earlier and Later denote the two saved Stage inputs used in the comparison. These names identify the two comparison sides and do not establish temporal or physical ground truth.",
     "The measured pair exercises Payload landmarks and added/removed paths only.",
     "Region distribution measures structural grouping, not importance, runtime, or human effort.",
     "Production USD inputs, raw Prim paths, resolver values, and reverse token maps are withheld."
   ],
   "commitments": {
-    "aligned_region_comparison_sha256": "7AFE1F8B429C59C04031312EFC47E85D13CE84D606700BD14DF100D5A9F399F2",
+    "region_comparison_sha256": "F18F44F8A0BD48B61238077514739B8F993C992D4F3E8A1364EF121766232C30",
     "expanded_path_set_sha256": "77CF12FD3B24F387C8A5B201B9C20F64B23C1B50901D8E45ADA9DDC4086D384A",
-    "flat_difference_path_and_label_sha256": "EF576AFA06CEB11EBA6A6CE5E883213DB5783619711001CC033F13D215F2FD0B",
-    "state_path_region_ownership_sha256": "05BA563E413449551D6E929E3F15D05F24763BE4D07E05A81A2E329A32A4CCEA"
+    "original_comparison_path_and_difference_type_sha256": "EF576AFA06CEB11EBA6A6CE5E883213DB5783619711001CC033F13D215F2FD0B",
+    "state_path_region_ownership_sha256": "5B832048B2B79552CE7F0D8646ED80A202BEFC240BC10A95713F045E9B8E4508"
   },
   "input": {
     "earlier": {
@@ -25,7 +25,7 @@
     "path_encoding": "PAIR_HIERARCHY_TOKEN_V1"
   },
   "paper_binding": {
-    "artifact_version": "3.0.0",
+    "artifact_version": "4.0.0",
     "measurement_runtime": "NVIDIA Isaac Sim 6.0.0 full Kit",
     "openusd_version": "0.25.11",
     "title": "Stage X-ray: Validated Structural Comparison of OpenUSD Stages for HPC Digital Twins"
@@ -33,7 +33,7 @@
   "rq1": {
     "added_path_count": 9377,
     "common_path_count": 8906,
-    "mask_counts": {
+    "difference_type_counts": {
       "ADDED": 9377,
       "PAYLOAD_PRESENCE_CHANGED": 0,
       "REFERENCE_PRESENCE_CHANGED": 0,
@@ -47,7 +47,7 @@
   },
   "rq2": {
     "affected_region_count": 75,
-    "aligned_region_count": 115,
+    "region_count": 115,
     "distribution": {
       "largest_20_changed_paths": 8190,
       "maximum": 413,
@@ -89,14 +89,14 @@
   },
   "rq3": {
     "duplicate_emission_count": 0,
-    "exact_path_and_label_match": true,
+    "exact_path_and_difference_type_match": true,
     "expanded_path_count": 17041,
     "false_positive_path_count": 0,
     "missed_path_count": 0,
     "recomputed_difference_count": 17030,
     "unchanged_expansion_context_count": 11
   },
-  "schema_version": "stage-xray-artifact-reproduction-3.0",
+  "schema_version": "stage-xray-artifact-reproduction-4.0",
   "validation": {
     "public_replay": {
       "classification": "RECOMPUTED",
@@ -125,7 +125,7 @@
         "has_authored_references",
         "has_authored_payloads"
       ],
-      "schema_version": "stage-xray-independent-storage-reconstruction-3.0",
+      "schema_version": "stage-xray-independent-storage-reconstruction-4.0",
       "states": {
         "earlier": {
           "logical_sequence_sha256": "1A62D5450771DA662E28D917D480975C5CAE835C5C4EA8A45BB8FC96D531FC9E",

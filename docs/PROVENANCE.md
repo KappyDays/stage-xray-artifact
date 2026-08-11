@@ -2,7 +2,7 @@
 
 ## Paper binding
 
-- Artifact version: `3.0.0`
+- Artifact version: `4.0.0`
 - Paper title: *Stage X-ray: Validated Structural Comparison of OpenUSD Stages for HPC Digital Twins*
 - Measurement runtime: NVIDIA Isaac Sim 6.0.0 full Kit
 - Bundled OpenUSD: 0.25.11
@@ -36,9 +36,9 @@ outputs from that run. `MANIFEST.sha256` binds them to the release.
 
 | Canonical commitment | SHA-256 |
 |---|---|
-| 17,030 path-and-label differences | `EF576AFA06CEB11EBA6A6CE5E883213DB5783619711001CC033F13D215F2FD0B` |
-| 34,842 state/path/region ownership rows | `05BA563E413449551D6E929E3F15D05F24763BE4D07E05A81A2E329A32A4CCEA` |
-| 115 aligned-region comparison rows | `7AFE1F8B429C59C04031312EFC47E85D13CE84D606700BD14DF100D5A9F399F2` |
+| Original comparison: 17,030 path-and-difference-type results | `EF576AFA06CEB11EBA6A6CE5E883213DB5783619711001CC033F13D215F2FD0B` |
+| 34,842 state/path/region ownership rows | `5B832048B2B79552CE7F0D8646ED80A202BEFC240BC10A95713F045E9B8E4508` |
+| 115 region comparison rows | `F18F44F8A0BD48B61238077514739B8F993C992D4F3E8A1364EF121766232C30` |
 | 17,041 expanded paths | `77CF12FD3B24F387C8A5B201B9C20F64B23C1B50901D8E45ADA9DDC4086D384A` |
 
 These commitments are recomputed by the public replay and frozen in
@@ -46,11 +46,11 @@ These commitments are recomputed by the public replay and frozen in
 
 ## Algorithm authority
 
-Version 3.0.0 implements:
+Version 4.0.0 implements:
 
 1. exact four-field comparison;
 2. Reference/Payload landmark discovery;
 3. nearest ancestor-or-self ownership with nested and residual regions;
-4. starting-path alignment;
+4. cross-state region identification from the union of landmark paths;
 5. affected-region expansion; and
 6. a second exact path-level comparison.

@@ -86,7 +86,7 @@ def reconstruction_report(
     earlier: Iterable[Record], later: Iterable[Record]
 ) -> dict[str, Any]:
     report = {
-        "schema_version": "stage-xray-independent-storage-reconstruction-3.0",
+        "schema_version": "stage-xray-independent-storage-reconstruction-4.0",
         "field_order": list(FIELDS),
         "states": {
             "earlier": reconstruct_state(earlier),

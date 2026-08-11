@@ -26,9 +26,9 @@ where each `dddd` is four decimal digits. Tokens are stable within this
 Earlier/Later pair and preserve parent-child shape. They are not globally
 stable identifiers, physical asset identities, or reversible encodings.
 
-## Comparison labels
+## Difference types
 
-The four fields yield five possible labels:
+The four fields yield five possible difference types:
 
 1. `ADDED`
 2. `REMOVED`
@@ -37,7 +37,7 @@ The four fields yield five possible labels:
 5. `PAYLOAD_PRESENCE_CHANGED`
 
 Only `ADDED` and `REMOVED` are nonzero in the evaluated pair. Synthetic tests
-exercise the other three labels.
+exercise the other three difference types.
 
 ## Region terminology
 
@@ -46,7 +46,8 @@ exercise the other three labels.
 - A nested landmark starts its own region and is excluded from its ancestor's
   membership.
 - If no landmark owns a path, it belongs to one scope-local residual region.
-- Equal starting paths align regions across states.
-- `affected region` is the union of added, removed, and changed aligned regions.
-  Only the single two-state region whose records differ is called a `changed
-  region` for this pair.
+- The union of landmark paths from both states identifies the regions; the
+  same landmark path identifies the same region on both comparison sides.
+- An `affected region` has added, removed, or changed status. Only the single
+  region whose records differ on both sides is called a `changed region` for
+  this pair.
