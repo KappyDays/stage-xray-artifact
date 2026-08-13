@@ -3,7 +3,7 @@
 ## Fully public replay
 
 The artifact fully recomputes the original record comparison, landmark regions,
-exactly-once assignment, affected-region expansion, second comparison, region
+exactly-once assignment, affected-region expansion, exact recomparison, region
 distribution, and storage-reconstruction check from sanitized records.
 
 ## Retained audit only

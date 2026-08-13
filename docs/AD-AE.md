@@ -8,14 +8,15 @@ from source code.
 
 ### Contributions
 
-- **C1 — Original record comparison first.** The method compares the complete
-  selected four-field record sets before adding hierarchy organization.
-- **C2 — Hierarchy organization and traceability.** Reference/Payload landmarks
-  create deterministic regions, every selected Prim has exactly one owner, and
-  affected-region expansion is linked back to exact paths.
-- **C3 — Fixed-condition evidence.** The evaluated pair is characterized by its
-  original record comparison, region distribution, second comparison, and four
-  stated validation checks.
+- **C1 — Saved-Stage comparison and hierarchy organization.** The paper
+  formulates saved-Stage structural comparison as the need to connect exact
+  path-level differences with their distribution across the existing Stage
+  hierarchies. It presents deterministic hierarchy-region organization that
+  preserves traceability to every supporting record.
+- **C2 — Fixed-pair evaluation and public replay.** The paper demonstrates this
+  organization on the Dream-AI Space/ScaleX-POD Stage pair using four
+  evidence-chain checks and provides a sanitized public artifact containing
+  the implementation and aggregate evidence.
 
 ### Computational artifacts
 
@@ -33,8 +34,7 @@ from source code.
 | Contribution | Supporting artifacts |
 |---|---|
 | C1 | A1, A2, A4 |
-| C2 | A1, A2, A4 |
-| C3 | A1, A2, A3, A4 |
+| C2 | A1, A2, A3, A4 |
 
 ## Part 2 — Expected results
 
@@ -47,12 +47,12 @@ expected values are:
 - 115 regions: 44 added, 30 removed, one changed, 40 unchanged;
 - exactly-once ownership of 34,842 state-specific records;
 - 17,041 expanded paths, including 11 unchanged context paths;
-- exact second-comparison equality for all 17,030 differences;
+- exact recomparison equality for all 17,030 differences;
 - 75 affected regions with 4–413 differences per region, median 156, and
   22/41/58 regions needed to reach 50/75/90 percent; and
 - JSON, SQLite, and trie reconstruction equality for both ordered projections.
 
-These results support C1–C3 at the publication-safe record level. They do not
+These results support C1 and C2 at the publication-safe record level. They do not
 reexecute production Stage opening or independently establish physical truth.
 
 ## Part 3 — Expected reproduction time
@@ -112,7 +112,7 @@ The one-command workflow has these explicit tasks:
    assign each selected Prim to its nearest ancestor-or-self landmark or the
    residual region, and use the union of landmark paths to identify the
    cross-state regions.
-4. **T4 — Expansion and second comparison:** expand every affected region and
+4. **T4 — Expansion and recomparison:** expand every affected region and
    run the same exact comparison on the rebuilt restricted record sets.
 5. **T5 — Secondary checks:** calculate the ranked region distribution,
    produce an SVG, and reconstruct the ordered records through JSON, SQLite,
@@ -139,7 +139,9 @@ a second output directory; the two output trees should be byte-identical.
 
 Read `build/reproduction/reproduction_report.md` first. Then inspect:
 
-- `claim_results.json` for the RQ-ordered values;
+- `claim_results.json` for the result-stage values. Its `rq1`, `rq2`, and `rq3`
+  keys are retained only for compatibility with the frozen v4 public schema;
+  they do not denote research questions in the final manuscript;
 - `verification.json` for frozen-value, manifest, and privacy status;
 - `region_distribution.csv` and `figure3-reproduced.svg` for the grouping
   result; and

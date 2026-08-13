@@ -39,6 +39,10 @@ The four fields yield five possible difference types:
 Only `ADDED` and `REMOVED` are nonzero in the evaluated pair. Synthetic tests
 exercise the other three difference types.
 
+The v4 output schema retains `false_positive_path_count` for compatibility.
+In the final manuscript terminology, a false-positive recomputed result is an
+`extra` difference.
+
 ## Region terminology
 
 - A landmark is a selected Prim with authored Reference or Payload presence.

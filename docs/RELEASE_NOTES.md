@@ -1,14 +1,15 @@
-# Stage X-ray Artifact v4.0.0
+# Stage X-ray Artifact v4.0.1
 
-This is the clean submission release for *Stage X-ray: Validated Structural
-Comparison of OpenUSD Stages for HPC Digital Twins*.
+This is the manuscript-aligned submission release for *Stage X-ray:
+Hierarchy-Organized Structural Comparison for OpenUSD-Based HPC Digital
+Twins*.
 
 ## Highlights
 
 - Binds retained production evidence to NVIDIA Isaac Sim 6.0.0, bundled
   OpenUSD 0.25.11, and six fresh full-Kit processes.
 - Replays landmark-based region construction, affected-region
-  expansion, second comparison, distribution analysis, and JSON/SQLite/trie
+  expansion, exact recomparison, distribution analysis, and JSON/SQLite/trie
   reconstruction checks.
 - Aligns the public API and documentation with the manuscript terms
   `original record comparison`, `landmark`, `region`, and `difference type`.

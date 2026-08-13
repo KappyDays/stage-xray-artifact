@@ -1,5 +1,17 @@
 # Changelog
 
+## v4.0.1 — 2026-08-13
+
+- Synchronized the paper title and citation metadata with the final manuscript.
+- Aligned the artifact description with the manuscript's two contributions and
+  replaced reader-facing RQ labels with result-stage headings.
+- Standardized reader-facing `recomparison` and `extra difference` terminology.
+- Added explicit paper-element mappings and manuscript-aligned Figure 3 axes
+  and cumulative-threshold markers.
+- Preserved the measured inputs, algorithm, numerical results, public schema,
+  evidence levels, privacy boundary, and deterministic replay gates from
+  v4.0.0.
+
 ## v4.0.0 — 2026-08-11
 
 - Aligned public terminology and schema names with the final manuscript:

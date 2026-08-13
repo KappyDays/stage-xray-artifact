@@ -47,6 +47,14 @@ class FullReproductionTests(unittest.TestCase):
             namespace = {"svg": "http://www.w3.org/2000/svg"}
             self.assertEqual(len(svg_root.findall("svg:rect", namespace)), 76)
             self.assertEqual(len(svg_root.findall("svg:polyline", namespace)), 1)
+            svg_text = (first / "figure3-reproduced.svg").read_text(encoding="utf-8")
+            self.assertIn("At least 50% by top 22 regions", svg_text)
+            self.assertIn("At least 75% by top 41 regions", svg_text)
+            self.assertIn("At least 90% by top 58 regions", svg_text)
+            report = (first / "reproduction_report.md").read_text(encoding="utf-8")
+            self.assertIn("## Exact selected-record result", report)
+            self.assertIn("## Evidence-preserving recomparison", report)
+            self.assertNotIn("## RQ", report)
 
 
 if __name__ == "__main__":

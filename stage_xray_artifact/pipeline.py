@@ -342,23 +342,23 @@ def _render_report(summary: dict[str, Any], verification: dict[str, Any]) -> str
 
 Overall verification: **{verification['status']}**
 
-## RQ1 — Original four-field record comparison
+## Exact selected-record result
 
 - Earlier / Later selected Prims: {summary['input']['earlier']['selected_prim_count']:,} / {summary['input']['later']['selected_prim_count']:,}
 - Common / removed / added paths: {rq1['common_path_count']:,} / {rq1['removed_path_count']:,} / {rq1['added_path_count']:,}
 - Complete observed additions and removals: {rq1['observed_difference_count']:,}
 
-## RQ2 — Hierarchy-region organization
+## Hierarchy regions and difference distribution
 
 - Total / affected regions: {rq2['region_count']} / {rq2['affected_region_count']}
 - Region statuses (added / removed / changed / unchanged): {rq2['region_status_counts']['ADDED_REGION']} / {rq2['region_status_counts']['REMOVED_REGION']} / {rq2['region_status_counts']['CHANGED_REGION']} / {rq2['region_status_counts']['UNCHANGED_REGION']}
 - Exactly-once state-specific ownership rows: {rq2['ownership_row_count']:,}
 
-## RQ3 — Expansion and second comparison
+## Evidence-preserving recomparison
 
 - Expanded paths: {rq3['expanded_path_count']:,}
 - Recomputed differences: {rq3['recomputed_difference_count']:,}
-- Miss / false positive / duplicate: {rq3['missed_path_count']} / {rq3['false_positive_path_count']} / {rq3['duplicate_emission_count']}
+- Missing / duplicate / extra: {rq3['missed_path_count']} / {rq3['duplicate_emission_count']} / {rq3['false_positive_path_count']}
 - Exact path-and-difference-type equality: {rq3['exact_path_and_difference_type_match']}
 
 ## Access boundary

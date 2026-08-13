@@ -25,10 +25,10 @@
     "path_encoding": "PAIR_HIERARCHY_TOKEN_V1"
   },
   "paper_binding": {
-    "artifact_version": "4.0.0",
+    "artifact_version": "4.0.1",
     "measurement_runtime": "NVIDIA Isaac Sim 6.0.0 full Kit",
     "openusd_version": "0.25.11",
-    "title": "Stage X-ray: Validated Structural Comparison of OpenUSD Stages for HPC Digital Twins"
+    "title": "Stage X-ray: Hierarchy-Organized Structural Comparison for OpenUSD-Based HPC Digital Twins"
   },
   "rq1": {
     "added_path_count": 9377,

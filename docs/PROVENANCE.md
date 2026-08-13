@@ -2,8 +2,8 @@
 
 ## Paper binding
 
-- Artifact version: `4.0.0`
-- Paper title: *Stage X-ray: Validated Structural Comparison of OpenUSD Stages for HPC Digital Twins*
+- Artifact version: `4.0.1`
+- Paper title: *Stage X-ray: Hierarchy-Organized Structural Comparison for OpenUSD-Based HPC Digital Twins*
 - Measurement runtime: NVIDIA Isaac Sim 6.0.0 full Kit
 - Bundled OpenUSD: 0.25.11
 
@@ -46,11 +46,11 @@ These commitments are recomputed by the public replay and frozen in
 
 ## Algorithm authority
 
-Version 4.0.0 implements:
+Version 4.0.1 implements:
 
 1. exact four-field comparison;
 2. Reference/Payload landmark discovery;
 3. nearest ancestor-or-self ownership with nested and residual regions;
 4. cross-state region identification from the union of landmark paths;
 5. affected-region expansion; and
-6. a second exact path-level comparison.
+6. exact path-level recomparison of the affected-region context.
